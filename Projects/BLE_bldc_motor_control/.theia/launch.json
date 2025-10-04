@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "BLE_bldc_motor_control",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "BLE_bldc_motor_control",
+                "resourceId": "/BLE_bldc_motor_control"
+            }
+        }
+    ]
+}

@@ -1,0 +1,59 @@
+# General
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Visual Studio Code
+.vscode/
+.history/
+
+# Compiled object files, binaries, etc.
+*.o
+*.obj
+*.elf
+*.map
+*.a
+*.lib
+*.exe
+*.clangd
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# SDK/IDE specific
+*.launches
+*.ccsproject
+*.settings/
+Debug/
+Release/
+
+
+# Firmware update files
+*.dfu
+*.bsl
+
+# User-specific files
+*.swp
+*.swo
+*.swn
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar

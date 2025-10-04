@@ -1,0 +1,132 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/ti/boards/LP_EM_CC2340R5" --device "CC2340R5RKP" --part "Default" --package "RKP" --rtos "freertos" --product "simplelink_lowpower_f3_sdk@9.11.00.18"
+ * @v2CliArgs --board "/ti/boards/LP_EM_CC2340R5" --device "CC2340R5" --package "VQFN (RKP)" --variant "CC2340R52" --rtos "freertos" --product "simplelink_lowpower_f3_sdk@9.11.00.18"
+ * @versions {"tool":"1.23.2+4156"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const FreeRTOS     = scripting.addModule("/freertos/FreeRTOS");
+const CCFG         = scripting.addModule("/ti/devices/CCFG");
+const rfdesign     = scripting.addModule("/ti/devices/radioconfig/rfdesign");
+const ADCBuf       = scripting.addModule("/ti/drivers/ADCBuf", {}, false);
+const ADCBuf1      = ADCBuf.addInstance();
+const GPIO         = scripting.addModule("/ti/drivers/GPIO");
+const GPIO2        = GPIO.addInstance();
+const GPIO3        = GPIO.addInstance();
+const GPIO4        = GPIO.addInstance();
+const GPIO5        = GPIO.addInstance();
+const GPIO6        = GPIO.addInstance();
+const GPIO7        = GPIO.addInstance();
+const NVS          = scripting.addModule("/ti/drivers/NVS", {}, false);
+const NVS1         = NVS.addInstance();
+const PWM          = scripting.addModule("/ti/drivers/PWM", {}, false);
+const PWM1         = PWM.addInstance();
+const PWM2         = PWM.addInstance();
+const Button       = scripting.addModule("/ti/drivers/apps/Button", {}, false);
+const Button1      = Button.addInstance();
+const Button2      = Button.addInstance();
+const LogSinkUART  = scripting.addModule("/ti/log/LogSinkUART", {}, false);
+const LogSinkUART1 = LogSinkUART.addInstance();
+const Settings     = scripting.addModule("/ti/posix/freertos/Settings");
+const zigbee       = scripting.addModule("/ti/zigbee/zigbee");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+FreeRTOS.idleStackSize  = 0x00000100;
+FreeRTOS.timerStackSize = 0x00000100;
+FreeRTOS.heapSize       = 0x000023BC;
+
+CCFG.ccfgTemplate.$name = "ti_devices_CCFG_CCFGCC23X0Template0";
+
+ADCBuf1.$name                             = "CONFIG_ADCBUF_0";
+ADCBuf1.adcChannels[0].$name              = "CONFIG_ADCBUF_CHANNEL_0";
+ADCBuf1.adcChannels[0].adc.adcPin.$assign = "boosterpack.9";
+
+GPIO2.$hardware = system.deviceData.board.components.LED_GREEN;
+GPIO2.$name     = "CONFIG_GPIO_GLED";
+
+GPIO3.$hardware = system.deviceData.board.components.LED_RED;
+GPIO3.$name     = "CONFIG_GPIO_RLED";
+
+GPIO4.$name            = "CONFIG_GPIO_HALL_SENSOR";
+GPIO4.interruptTrigger = "Rising Edge";
+GPIO4.gpioPin.$assign  = "boosterpack.10";
+
+GPIO5.$name           = "CONFIG_GPIO_HALL_PWR";
+GPIO5.mode            = "Output";
+GPIO5.outputStrength  = "High";
+GPIO5.gpioPin.$assign = "boosterpack.23";
+
+GPIO6.$name = "CONFIG_GPIO_BTN1";
+GPIO6.pull  = "Pull Up";
+
+GPIO7.$name = "CONFIG_GPIO_BTN2";
+GPIO7.pull  = "Pull Up";
+
+NVS1.$name                    = "CONFIG_NVSINTERNAL_APP";
+NVS1.internalFlash.$name      = "ti_drivers_nvs_NVSLPF30";
+NVS1.internalFlash.regionBase = 0x7E800;
+
+PWM1.$name                            = "CONFIG_PWM_1";
+PWM1.timerObject.$name                = "CONFIG_LGPTIMER_1";
+PWM1.timerObject.channel1Connection   = "Pin";
+PWM1.timerObject.timer.$assign        = "LGPT3";
+PWM1.timerObject.timer.ch1Pin.$assign = "boosterpack.25";
+
+PWM2.$name                          = "CONFIG_PWM_0";
+PWM2.timerObject.$name              = "CONFIG_LGPTIMER_0";
+PWM2.timerObject.channel2Connection = "Pin";
+
+Button1.$name     = "CONFIG_BUTTON_1";
+Button1.$hardware = system.deviceData.board.components["BTN-1"];
+
+Button2.$name     = "CONFIG_BUTTON_2";
+Button2.$hardware = system.deviceData.board.components["BTN-2"];
+
+zigbee.deviceType                        = ["zed"];
+zigbee.loggingEnabled                    = true;
+zigbee.primaryChannels                   = [17];
+zigbee.LogModuleZigbeeApp.loggerSink     = "/ti/log/LogSinkUART";
+zigbee.LogModuleZigbeeApp.enable_DEBUG   = true;
+zigbee.LogModuleZigbeeApp.enable_VERBOSE = true;
+zigbee.LogModuleZigbeeApp.enable_INFO    = true;
+
+const RNG       = scripting.addModule("/ti/drivers/RNG", {}, false);
+RNG.rngPoolSize = 512;
+scripting.suppress("This the default noise conditioning key provided by TI, which is acceptable per NIST SP 800-90B\\. However, TI recommends you change this default value to a custom random value for your product", RNG, "noiseConditioningKeyW3");
+
+const LogSinkBuf                   = scripting.addModule("/ti/log/LogSinkBuf", {}, false);
+const LogSinkBuf1                  = LogSinkBuf.addInstance({}, false);
+LogSinkBuf1.$name                  = "CONFIG_ti_log_LogSinkBuf_0";
+zigbee.LogModuleZigbeeLLMAC.logger = LogSinkBuf1;
+zigbee.LogModuleZigbeeOSIF.logger  = LogSinkBuf1;
+
+LogSinkUART1.$name                   = "CONFIG_ti_log_LogSinkUART_0";
+zigbee.LogModuleZigbeeApp.logger     = LogSinkUART1;
+LogSinkUART1.uart.$name              = "CONFIG_UART2_0";
+LogSinkUART1.uart.uart.txPin.$assign = "boosterpack.4";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+ADCBuf1.adc.$suggestSolution                         = "ADC";
+ADCBuf1.adc.dataDmaChannel.$suggestSolution          = "DMA_CH3";
+ADCBuf1.adcChannels[0].adc.$suggestSolution          = "ADC";
+GPIO2.gpioPin.$suggestSolution                       = "boosterpack.40";
+GPIO3.gpioPin.$suggestSolution                       = "boosterpack.39";
+GPIO6.gpioPin.$suggestSolution                       = "boosterpack.36";
+GPIO7.gpioPin.$suggestSolution                       = "boosterpack.17";
+PWM2.timerObject.timer.$suggestSolution              = "LGPT2";
+PWM2.timerObject.timer.ch2Pin.$suggestSolution       = "boosterpack.27";
+Button1.button.$suggestSolution                      = "boosterpack.13";
+Button2.button.$suggestSolution                      = "boosterpack.12";
+LogSinkUART1.uart.uart.$suggestSolution              = "UART0";
+LogSinkUART1.uart.uart.dmaTxChannel.$suggestSolution = "DMA_CH1";
+LogSinkUART1.uart.uart.dmaRxChannel.$suggestSolution = "DMA_CH0";
