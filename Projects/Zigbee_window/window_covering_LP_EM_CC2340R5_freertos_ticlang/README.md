@@ -117,6 +117,15 @@ the pin configuration table
 remotely (see the window_controller project for more information on remote shade 
 control)
 
+Local push button actions are described here:
+
+Here are local push button commands:
+
+| Button | Held longer than 1s | Double-pressed within 1s | Clicked once |
+|----------|-----|---------------|-------------|
+| BTN-1 (left/DIO20) | Move motor up until released | Set top end point | Move to top end point |
+| BTN-2 (right/DIO0) | Move motor down until released | Set bottom end point | Move to bottom end point |
+
 ## Optional Hall-Effect Sensor Setup
 
 The Hall-effect sensor is used to track the motor position. To set up the Hall-effect sensor:

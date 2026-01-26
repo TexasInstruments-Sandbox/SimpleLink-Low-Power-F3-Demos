@@ -107,19 +107,27 @@ The following table lists the examples included in this repository:
 
 | **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
 |---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
-| CLI Driver Example        | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a UART-based Command Line Interface (CLI) driver.                 |
-| UART Commandline Example  | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Provides a simple UART-based command-line interface for user interaction.      |
 | BLE BLDC motor control    | 8.40.0.61       | LP-EM-CC2340R5     | 20.2.0          | Brushless DC (BLDC) motor control using a BLE radio interface.                 |
+| BLE Sensor Suite          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the BP-BASSENSORSMKII to transmit data to the SimpleLink Connect App      |
+| CLI Driver Example        | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a UART-based Command Line Interface (CLI) driver.                 |
+| Sharp128 TFT LCD          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the Display driver to write output to the BOOSTXL-SHARP128 LCD display    |
+| Full GATT Client          | 9.10.0.83       | LP-EM-CC2340R5     | 20.3.0          | GATT Client that uses the GATT API functions to query the GATT table of any central. |
 | LCD                       | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Driving a 1/3 bias, 3-COM, 7-segment LCD with backlight and contrast control   |
-| mcuSblHost                | 9.10.0.83        | LP-EM-CC2340R5     | 12.8.1          | Reference example to interface with a CC2340R5 ROM Serial Bootloader (SBL).     |
+| MCUboot XIP                       | 9.14.0.41       | LP-EM-CC2340R5     | 20.3.1  | Creating customized bootloader that can deterministically switch between images |
 | PropRF Echo RX            | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Proprietary Echo RX example modified for stepper motor commands.               |
 | PropRF Echo TX with stepper motor  | 9.11.0.18 | LP-EM-CC2340R5  | 20.2.0          | Proprietary Echo TX example with added stepper motor functionality.            |
+| rfPacket IEEE test        | 9.12.0.19       | LP-EM-CC2340R5     | 20.2.0          | Proprietary RF RX/TX example using the IEEE 802.15.4 PHY. |
+| mcuSblHost                | 9.10.0.83       | LP-EM-CC2340R5     | 12.8.1          | Reference example to interface with a CC2340R5 ROM Serial Bootloader (SBL).     |
 | PWM output with DMA       | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Demonstrates PWM output control using a DMA lookup table.                      |
+| Zigbee Simple Combo       | 9.14.0.35       | LP-EM-CC2340R5     | 20.2.0          | Zigbee Coordinator with combined OnOff Light and Green Power Sink applications.  |
+| Super Advertiser          | 9.10.0.83       | LP-EM-CC2340R5     | 20.3.0          | Broadcaster that sends as much advertisements as possible to stress test centrals. |
+| UART Commandline Example  | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Provides a simple UART-based command-line interface for user interaction.      |
 | Zigbee Window Controller  | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Zigbee Coordinator with Window Controller ZCL.                                 |
 | Zigbee Window Covering    | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Window Covering sleepy ZED node with Brushed DC (BDC) and hall effect sensor.  |
-| Full GATT Client          | 9.10.0.83       | LP-EM-CC2340R5     | 20.3.0          | GATT Client that uses the GATT API functions to query the GATT table of any central. |
-| Super Advertiser          | 9.10.0.83       | LP-EM-CC2340R5     | 20.3.0          | Broadcaster that sends as much advertisements as possible to stress test centrals. |
+| ANCS & AMS          | 9.14.0.35       | LP-EM-CC2745R10-Q1     | 20.4.0          | Peripheral that will connect to iOS device and subscribe to ANCS and AMS services |
+| Second UART          | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a second (Software-based) uart in a BLE example on the CC2340R device.  |
 ---
+
 
 ## Additional Resources
 
