@@ -57,3 +57,6 @@ Release/
 *.tar.gz
 *.7z
 *.rar
+
+# AI
+*.claude
