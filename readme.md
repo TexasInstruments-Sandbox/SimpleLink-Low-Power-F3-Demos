@@ -110,6 +110,8 @@ The following table lists the examples included in this repository:
 | BLE BLDC motor control    | 8.40.0.61       | LP-EM-CC2340R5     | 20.2.0          | Brushless DC (BLDC) motor control using a BLE radio interface.                 |
 | BLE Sensor Suite          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the BP-BASSENSORSMKII to transmit data to the SimpleLink Connect App      |
 | CLI Driver Example        | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a UART-based Command Line Interface (CLI) driver.                 |
+| Color Light               | 9.14.0.39       | LP-EM-CC2340R5     | 20.4.0          | Operates as a Zigbee router (ZR) color light. |
+| DALI Zigbee Bridge        | 9.14.0.39       | LP-EM-CC2340R5     | 20.4.0          | Bridges incoming ZCL commands into DALI wired instructions to a MSPM0 LP. |
 | Sharp128 TFT LCD          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the Display driver to write output to the BOOSTXL-SHARP128 LCD display    |
 | Full GATT Client          | 9.10.0.83       | LP-EM-CC2340R5     | 20.3.0          | GATT Client that uses the GATT API functions to query the GATT table of any central. |
 | LCD                       | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Driving a 1/3 bias, 3-COM, 7-segment LCD with backlight and contrast control   |
