@@ -19,6 +19,22 @@ communication with the following functionality:
 * Optional PWM-based control for non-DALI fixtures
 * Hardware-agnostic DALI HAL using ClockP and GPIO
 
+## Prerequisite: Source file change
+
+In order to avoid the **use of undeclared identifier 'cvc_alarm_infodevice_ctx_name'**
+error it is necessary to change `ZBOSS_DEVICE_DECLARE_LEVEL_CONTROL_CTX(cvc_alarm_info## ep_name,` 
+to `ZBOSS_DEVICE_DECLARE_LEVEL_CONTROL_CTX(cvc_alarm_info## device_ctx_name,` from within 
+`<sdk_install_directory>\source\third_party\zigbee\zboss_stable\include\ha\zb_ha_dimmable_light.h`:
+
+```c
+#define ZB_HA_DECLARE_DIMMABLE_LIGHT_EP(ep_name, ep_id, cluster_list)           \
+  ZB_ZCL_DECLARE_HA_DIMMABLE_LIGHT_SIMPLE_DESC(ep_name, ep_id,                  \
+    ZB_HA_DIMMABLE_LIGHT_IN_CLUSTER_NUM, ZB_HA_DIMMABLE_LIGHT_OUT_CLUSTER_NUM); \
+  ZBOSS_DEVICE_DECLARE_REPORTING_CTX(reporting_info## ep_name,                  \
+                                     ZB_HA_DIMMABLE_LIGHT_REPORT_ATTR_COUNT);   \
+  ZBOSS_DEVICE_DECLARE_LEVEL_CONTROL_CTX(cvc_alarm_info## device_ctx_name,              \
+```
+
 ## Pin Configuration
 
 | Function | CC2340R5 Pin | Configuration | Description |
