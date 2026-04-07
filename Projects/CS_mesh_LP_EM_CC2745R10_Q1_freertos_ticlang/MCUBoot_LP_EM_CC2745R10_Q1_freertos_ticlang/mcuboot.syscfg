@@ -1,0 +1,68 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/ti/boards/LP_EM_CC2745R10_Q1" --device "CC2745R10RHAQ1" --part "Default" --package "RHA" --rtos "nortos" --product "simplelink_lowpower_f3_sdk@9.14.00.41"
+ * @v2CliArgs --board "/ti/boards/LP_EM_CC2745R10_Q1" --device "CC2745R10-Q1" --package "VQFN (RHA)" --rtos "nortos" --product "simplelink_lowpower_f3_sdk@9.14.00.41"
+ * @versions {"tool":"1.23.2+4156"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const mcuboot = scripting.addModule("/ti/common/mcuboot");
+const CCFG    = scripting.addModule("/ti/devices/CCFG");
+const Board   = scripting.addModule("/ti/drivers/Board");
+const GPIO    = scripting.addModule("/ti/drivers/GPIO");
+const GPIO1   = GPIO.addInstance();
+const GPIO2   = GPIO.addInstance();
+const GPIO3   = GPIO.addInstance();
+const GPIO4   = GPIO.addInstance();
+const UART2   = scripting.addModule("/ti/drivers/UART2", {}, false);
+const UART21  = UART2.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mcuboot.secondaryBase1 = 0x00077000;
+mcuboot.secondarySize1 = 0x0006D000;
+mcuboot.primaryBase1   = 0x0000A000;
+mcuboot.primarySize1   = 0x0006D000;
+
+CCFG.ccfgTemplate.$name = "ti_devices_CCFG_CCFGCC26XXTemplate0";
+
+GPIO1.$hardware = system.deviceData.board.components.LED_RED;
+GPIO1.$name     = "CONFIG_GPIO_LED_0";
+
+GPIO2.$hardware = system.deviceData.board.components.LED_GREEN;
+GPIO2.$name     = "CONFIG_GPIO_LED_1";
+
+GPIO3.$hardware = system.deviceData.board.components["BTN-1"];
+GPIO3.$name     = "CONFIG_GPIO_BUTTON_0";
+
+GPIO4.$hardware = system.deviceData.board.components["BTN-2"];
+GPIO4.$name     = "CONFIG_GPIO_BUTTON_1";
+
+UART21.$name             = "CONFIG_DISPLAY_UART";
+UART21.txRingBufferSize  = 256;
+UART21.enableNonblocking = false;
+UART21.$hardware         = system.deviceData.board.components.XDS110UART;
+
+/**
+ * References between modules
+ */
+CCFG.defaultLfoscCompProfile = null;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+GPIO1.gpioPin.$suggestSolution            = "boosterpack.36";
+GPIO2.gpioPin.$suggestSolution            = "boosterpack.19";
+GPIO3.gpioPin.$suggestSolution            = "boosterpack.30";
+GPIO4.gpioPin.$suggestSolution            = "boosterpack.40";
+UART21.uart.$suggestSolution              = "UART0";
+UART21.uart.dmaTxChannel.$suggestSolution = "DMA_CH2";
+UART21.uart.dmaRxChannel.$suggestSolution = "DMA_CH3";
+UART21.uart.txPin.$suggestSolution        = "boosterpack.4";
+UART21.uart.rxPin.$suggestSolution        = "boosterpack.3";

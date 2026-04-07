@@ -1,0 +1,8 @@
+config IMAGE_SWAP_DELAY
+    int "Delay in milliseconds between the Bluetooth Mesh message and the image swapping"
+    default 1000   # 1 second
+    help
+        Sets the delay in milliseconds between the Bluetooth Mesh
+        message and the image swapping.
+
+source "Kconfig.zephyr"

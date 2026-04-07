@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLE Mesh DFU Configuration Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BLE Mesh DFU Configuration Tool</h1>
+            <p class="subtitle">Configure and validate settings for Distributor, Friend, and LPN nodes</p>
+        </header>
+
+        <div class="node-grid">
+            <!-- Distributor Node -->
+            <div class="node-card">
+                <div class="node-header">
+                    <div class="node-icon distributor-icon">📡</div>
+                    <div class="node-title">
+                        <h2>Distributor</h2>
+                        <p class="description">Gateway/Client sending firmware</p>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            TX_SEG_MAX
+                            <span class="tooltip info-badge">
+                                ?
+                                <span class="tooltiptext">Maximum segments distributor can send in one message. Controls max outgoing message size: (TX_SEG_MAX × 12) - 4 bytes.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="dist-tx-seg-value" min="1" max="32" value="6">
+                    </div>
+                    <input type="range" id="dist-tx-seg" min="1" max="32" value="6" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>32</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            RX_SEG_MAX
+                            <span class="tooltip info-badge auto-badge" id="dist-rx-seg-badge">
+                                AUTO
+                                <span class="tooltiptext" id="dist-rx-seg-tooltip">Automatically kept equal to LPN TX_SEG_MAX.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="dist-rx-seg-value" min="1" max="32" value="6">
+                    </div>
+                    <input type="range" id="dist-rx-seg" min="1" max="32" value="6" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>32</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            TX_SEG_MSG_COUNT
+                            <span class="tooltip info-badge auto-badge" id="dist-tx-count-badge">
+                                AUTO
+                                <span class="tooltiptext" id="dist-tx-count-tooltip">Automatically scaled to match number of concurrent LPNs.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="dist-tx-count-value" min="1" max="20" value="1">
+                    </div>
+                    <input type="range" id="dist-tx-count" min="1" max="20" value="1" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>20</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            RX_SEG_MSG_COUNT
+                            <span class="tooltip info-badge">
+                                ?
+                                <span class="tooltiptext">Number of simultaneous incoming segmented messages. Should match number of targets sending responses.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="dist-rx-count-value" min="1" max="20" value="5">
+                    </div>
+                    <input type="range" id="dist-rx-count" min="1" max="20" value="5" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>20</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Friend Node -->
+            <div class="node-card">
+                <div class="node-header">
+                    <div class="node-icon friend-icon">🤝</div>
+                    <div class="node-title">
+                        <h2>Friend Node</h2>
+                        <p class="description">Relay buffering messages for LPNs</p>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            DESIRED_CHUNKS_PER_REQUEST
+                            <span class="tooltip info-badge">
+                                ?
+                                <span class="tooltiptext">Target number of chunks LPN should request per Block Report. Lower values = less memory, more round trips. Higher values = more memory, fewer round trips. Recommended: 4-8 chunks.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="friend-desired-chunks-value" min="2" max="12" value="6">
+                    </div>
+                    <input type="range" id="friend-desired-chunks" min="2" max="12" value="6" step="1">
+                    <div class="range-labels">
+                        <span>2 (min memory)</span>
+                        <span>12 (max throughput)</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            FRIEND_QUEUE_SIZE
+                            <span class="tooltip info-badge auto-badge" id="friend-queue-badge">
+                                AUTO
+                                <span class="tooltiptext" id="friend-queue-tooltip">Automatically calculated based on chunk size and desired chunks per request. Formula: chunks × segments_per_chunk × 1.15 (15% safety margin).</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="friend-queue-value" min="8" max="512" value="32">
+                    </div>
+                    <input type="range" id="friend-queue" min="8" max="512" value="32" step="4">
+                    <div class="range-labels">
+                        <span>8</span>
+                        <span>512</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            TX_SEG_MAX
+                            <span class="tooltip info-badge auto-badge" id="friend-tx-seg-badge">
+                                AUTO
+                                <span class="tooltiptext" id="friend-tx-seg-tooltip">Automatically kept equal to Distributor TX_SEG_MAX.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="friend-tx-seg-value" min="1" max="32" value="6">
+                    </div>
+                    <input type="range" id="friend-tx-seg" min="1" max="32" value="6" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>32</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            RX_SEG_MAX
+                            <span class="tooltip info-badge auto-badge" id="friend-rx-seg-badge">
+                                AUTO
+                                <span class="tooltiptext" id="friend-rx-seg-tooltip">Automatically kept equal to Distributor TX_SEG_MAX.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="friend-rx-seg-value" min="1" max="32" value="6">
+                    </div>
+                    <input type="range" id="friend-rx-seg" min="1" max="32" value="6" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>32</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            TX_SEG_MSG_COUNT
+                            <span class="tooltip info-badge auto-badge" id="friend-tx-count-badge">
+                                AUTO
+                                <span class="tooltiptext" id="friend-tx-count-tooltip">Automatically scaled to match number of concurrent LPNs.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="friend-tx-count-value" min="1" max="10" value="1">
+                    </div>
+                    <input type="range" id="friend-tx-count" min="1" max="10" value="1" step="1">
+                    <div class="range-labels">
+                        <span>1 LPN</span>
+                        <span>10 LPNs</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            RX_SEG_MSG_COUNT
+                            <span class="tooltip info-badge auto-badge" id="friend-rx-count-badge">
+                                AUTO
+                                <span class="tooltiptext" id="friend-rx-count-tooltip">Automatically scaled to LPN count + 1 (capped at 10).</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="friend-rx-count-value" min="1" max="10" value="2">
+                    </div>
+                    <input type="range" id="friend-rx-count" min="1" max="10" value="2" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LPN Section -->
+            <div>
+                <!-- LPN Node -->
+                <div class="node-card">
+                <div class="node-header">
+                    <div class="node-icon lpn-icon">🔋</div>
+                    <div class="node-title">
+                        <h2>LPN Target</h2>
+                        <p class="description">Low Power Node receiving firmware</p>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            RX_SEG_MAX
+                            <span class="tooltip info-badge auto-badge" id="lpn-rx-seg-badge">
+                                AUTO
+                                <span class="tooltiptext" id="lpn-rx-seg-tooltip">Automatically kept equal to Distributor TX_SEG_MAX.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="lpn-rx-seg-value" min="1" max="32" value="6">
+                    </div>
+                    <input type="range" id="lpn-rx-seg" min="1" max="32" value="6" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>32</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            TX_SEG_MAX
+                            <span class="tooltip info-badge">
+                                ?
+                                <span class="tooltiptext">For sending responses and Block Reports. Usually smaller than RX since LPN mostly receives.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="lpn-tx-seg-value" min="1" max="32" value="6">
+                    </div>
+                    <input type="range" id="lpn-tx-seg" min="1" max="32" value="6" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>32</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            BLOB_REPORT_TIMEOUT
+                            <span class="tooltip info-badge">
+                                ?
+                                <span class="tooltiptext">Time (seconds) LPN waits before reporting missing chunks. Balance between quick recovery and battery life.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="lpn-report-timeout-value" min="1" max="31" value="10">
+                    </div>
+                    <input type="range" id="lpn-report-timeout" min="1" max="31" value="10" step="1">
+                    <div class="range-labels">
+                        <span>1s</span>
+                        <span>31s</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            TX_SEG_MSG_COUNT
+                            <span class="tooltip info-badge">
+                                ?
+                                <span class="tooltiptext">LPNs typically only send to one distributor, so 1 is usually sufficient.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="lpn-tx-count-value" min="1" max="5" value="1">
+                    </div>
+                    <input type="range" id="lpn-tx-count" min="1" max="5" value="1" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>5</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <div class="config-label">
+                        <span class="config-name">
+                            RX_SEG_MSG_COUNT
+                            <span class="tooltip info-badge">
+                                ?
+                                <span class="tooltiptext">LPNs typically receive from one distributor, so 1 is usually sufficient.</span>
+                            </span>
+                        </span>
+                        <input type="number" class="config-value-input" id="lpn-rx-count-value" min="1" max="5" value="1">
+                    </div>
+                    <input type="range" id="lpn-rx-count" min="1" max="5" value="1" step="1">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>5</span>
+                    </div>
+                </div>
+
+                </div>
+
+                <div class="lpn-count-section" style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-top: 20px;">
+                    <div style="font-weight: 600; color: #333; font-size: 1.05em; margin-bottom: 15px;">
+                        Number of Concurrent LPNs
+                        <span class="tooltip info-badge" style="margin-left: 8px;">
+                            ?
+                            <span class="tooltiptext">
+                                Specify how many Low Power Nodes will be updated concurrently in your network.
+                                This automatically scales Friend queue size and MSG_COUNT parameters to handle multiple targets.
+                            </span>
+                        </span>
+                    </div>
+                    <div class="config-group" style="margin: 0;">
+                        <div class="config-label">
+                            <span class="config-name">LPN_COUNT</span>
+                            <input type="number" class="config-value-input" id="lpn-count-value" min="1" max="10" value="1">
+                        </div>
+                        <input type="range" id="lpn-count" min="1" max="10" value="1" step="1">
+                        <div class="range-labels">
+                            <span>1</span>
+                            <span>10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="global-optimization-section" style="margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 10px; border: 2px solid #667eea;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" id="global-auto-optimize" checked style="width: 20px; height: 20px; cursor: pointer;">
+                <label for="global-auto-optimize" style="cursor: pointer; user-select: none; flex: 1; font-weight: 600; color: #333; font-size: 1.05em;">
+                    Enable global auto-optimization
+                    <span class="tooltip info-badge" style="margin-left: 8px;">
+                        ?
+                        <span class="tooltiptext">
+                            When enabled, related parameters automatically adjust to stay optimally matched (bidirectional).
+                            Examples: Friend TX/RX always match Distributor TX, Distributor RX matches LPN TX.
+                            When disabled, only one-way increases happen to prevent invalid configurations.
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <!-- DFU Duration Estimator -->
+        <div class="calculations-card">
+            <div class="calculations-header">
+                <span class="calc-icon">⏱️</span>
+                DFU Duration Estimator (Unicast Mode)
+            </div>
+            <div style="margin-bottom: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <label style="font-weight: 600; color: #333;">Firmware Size (bytes):</label>
+                    <input type="number" id="firmware-size-bytes" min="1024" max="2097152" value="262144" step="1"
+                           style="padding: 8px 12px; border: 2px solid #667eea; border-radius: 6px; font-size: 1em; width: 150px; font-weight: 600; color: #333;">
+                    <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 6px; font-size: 0.9em;" id="firmware-size-display">256.0 KB</span>
+                </div>
+                <div style="font-size: 0.85em; color: #666; margin-top: 10px;">
+                    Quick presets:
+                    <button onclick="setFirmwareSize(65536)" style="margin: 0 5px; padding: 4px 10px; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">64 KB</button>
+                    <button onclick="setFirmwareSize(131072)" style="margin: 0 5px; padding: 4px 10px; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">128 KB</button>
+                    <button onclick="setFirmwareSize(262144)" style="margin: 0 5px; padding: 4px 10px; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">256 KB</button>
+                    <button onclick="setFirmwareSize(524288)" style="margin: 0 5px; padding: 4px 10px; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">512 KB</button>
+                    <button onclick="setFirmwareSize(1048576)" style="margin: 0 5px; padding: 4px 10px; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">1 MB</button>
+                </div>
+            </div>
+            <div class="calc-grid" id="dfu-duration-grid">
+                <!-- Duration estimates will be dynamically inserted here -->
+            </div>
+            <div id="dfu-duration-info" style="margin-top: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 6px; font-size: 0.9em; color: #e65100;">
+                <div style="font-weight: 600; margin-bottom: 8px; font-size: 1em;">⚠️ Important: These are estimates only</div>
+                <p style="margin: 5px 0;">Actual DFU times can vary significantly based on:</p>
+                <ul style="margin: 8px 0 5px 20px; padding: 0;">
+                    <li><strong>RF environment:</strong> Interference, noise floor, multi-path fading</li>
+                    <li><strong>Network topology:</strong> Number of hops, relay congestion, mesh density</li>
+                    <li><strong>Device capabilities:</strong> Processing speed, flash write performance, RTOS scheduling</li>
+                    <li><strong>Network conditions:</strong> Retransmissions, packet loss rate, collision avoidance delays</li>
+                    <li><strong>Concurrent traffic:</strong> Other mesh activity during DFU operation</li>
+                    <li><strong>Power conditions:</strong> Battery voltage affecting TX power and processing speed</li>
+                </ul>
+                <p style="margin: 8px 0 0 0; font-style: italic;">For accurate planning, validate estimates with actual measurements in your deployment environment. A 30% overhead factor is included, but real-world variance may be ±20-30%.</p>
+            </div>
+        </div>
+
+        <!-- Calculations -->
+        <div class="calculations-card">
+            <div class="calculations-header">
+                <span class="calc-icon">🧮</span>
+                Real-time Calculations
+            </div>
+            <div class="calc-grid">
+                <div class="calc-item">
+                    <div class="calc-label">Negotiated Chunk Size</div>
+                    <div class="calc-value" id="calc-chunk-size">68<span class="calc-unit">bytes</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Segments Per Chunk</div>
+                    <div class="calc-value" id="calc-segments-per-chunk">7<span class="calc-unit">segments</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Max Chunks Per Request</div>
+                    <div class="calc-value" id="calc-max-chunks">4<span class="calc-unit">chunks</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Queue Utilization</div>
+                    <div class="calc-value" id="calc-queue-util">87<span class="calc-unit">%</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Max Message Size (TX)</div>
+                    <div class="calc-value" id="calc-max-tx-size">68<span class="calc-unit">bytes</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Max Message Size (RX)</div>
+                    <div class="calc-value" id="calc-max-rx-size">68<span class="calc-unit">bytes</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Friend LPN Capacity</div>
+                    <div class="calc-value" id="calc-friend-lpn-capacity">2<span class="calc-unit">LPNs</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Friend Total Memory</div>
+                    <div class="calc-value" id="calc-friend-memory">3.5<span class="calc-unit">KB</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Block Size</div>
+                    <div class="calc-value" id="calc-block-size">4096<span class="calc-unit">bytes</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Chunks Per Block</div>
+                    <div class="calc-value" id="calc-chunks-per-block">60<span class="calc-unit">chunks</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Total Blocks</div>
+                    <div class="calc-value" id="calc-total-blocks">64<span class="calc-unit">blocks</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Total Chunks</div>
+                    <div class="calc-value" id="calc-total-chunks">3840<span class="calc-unit">chunks</span></div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Effective LPN Poll Rate</div>
+                    <div class="calc-value" id="calc-poll-rate">28.0<span class="calc-unit">seconds</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="recommendations-card">
+            <div class="calculations-header">
+                <span class="calc-icon">💡</span>
+                Smart Recommendations
+            </div>
+            <div id="recommendations-container">
+                <!-- Recommendations will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <button class="export-button" onclick="exportConfig()">📋 Copy Kconfig Options to Clipboard</button>
+
+        <!-- Calculation Methodology Documentation -->
+        <div class="calculations-card" style="margin-top: 30px;">
+            <div class="calculations-header">
+                <span class="calc-icon">📚</span>
+                DFU Duration Calculation Methodology
+            </div>
+            <div style="color: #555; line-height: 1.8; padding: 10px 0;">
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Overview</h3>
+                <p>This tool calculates BLE Mesh DFU duration based on Zephyr RTOS source code analysis. The calculation models the actual LPN polling behavior, Friend queue management, and segment-level data transfer.</p>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Step 1: Calculate Negotiated Chunk Size</h3>
+                <p><strong>Formula:</strong> <code>chunkSize = MIN(all RX_SEG_MAX) × 12 - 7</code></p>
+                <ul style="margin-left: 20px;">
+                    <li>Takes the smallest RX_SEG_MAX among Distributor, Friend, and LPN</li>
+                    <li>Each BLE Mesh segment carries 12 bytes of application payload</li>
+                    <li>Subtracts 7 bytes for BLOB chunk overhead (1-byte opcode + 2-byte chunk index + 4-byte MIC)</li>
+                </ul>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Step 2: Calculate Segments Per Chunk</h3>
+                <p><strong>Formula:</strong> <code>segmentsPerChunk = ⌈(7 + chunkSize) / 12⌉</code></p>
+                <ul style="margin-left: 20px;">
+                    <li>Includes the 7-byte overhead in the total chunk SDU length</li>
+                    <li>Divides by 12 bytes per segment and rounds up</li>
+                </ul>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Step 3: Calculate Max Chunks Per Block Report</h3>
+                <p><strong>Formula:</strong> <code>maxChunks = MIN(DESIRED_CHUNKS_PER_REQUEST, ⌊Friend Queue Size / segmentsPerChunk⌋)</code></p>
+                <ul style="margin-left: 20px;">
+                    <li>Limited by both user's desired chunks per request AND Friend node's queue capacity</li>
+                    <li>LPN cannot request more chunks than Friend can buffer</li>
+                    <li>Actual Zephyr implementation also caps at CONFIG_BT_MESH_BLOB_SRV_PULL_REQ_COUNT (default: 4)</li>
+                    <li>This tool uses DESIRED_CHUNKS_PER_REQUEST as the effective limit</li>
+                </ul>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Step 4: Calculate Effective Poll Timeout</h3>
+                <p><strong>Important:</strong> During active DFU operations, Zephyr caps the LPN poll timeout at <strong>1 second</strong> regardless of CONFIG_BT_MESH_LPN_POLL_TIMEOUT.</p>
+                <p><strong>Formula:</strong> <code>effectivePollTimeout = min(POLL_TIMEOUT_MAX, 1000ms)</code></p>
+                <ul style="margin-left: 20px;">
+                    <li>For DFU duration estimation, this tool uses fixed default values:
+                        <ul style="margin-left: 20px;">
+                            <li><strong>LPN_POLL_TIMEOUT</strong> = 80 (8 seconds)</li>
+                            <li><strong>LPN_RECV_DELAY</strong> = 100ms</li>
+                        </ul>
+                    </li>
+                    <li>These defaults result in POLL_TIMEOUT_MAX ≈ 5.9 seconds</li>
+                    <li>During active DFU, the effective poll timeout is capped at <strong>1000ms</strong></li>
+                    <li>Source: <code>zephyr/subsys/bluetooth/mesh/lpn.c:122</code> - <code>if (bt_mesh_tx_in_progress()) return MIN(POLL_TIMEOUT_MAX, 1000)</code></li>
+                </ul>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Step 5: Calculate Time Per Block Report Cycle</h3>
+                <p><strong>Formula:</strong> <code>100ms + effectivePollTimeout + (totalSegments × 200ms) + BLOB_TIMEOUT</code></p>
+                <p>Based on packet capture analysis, each Block Report cycle consists of these phases:</p>
+
+                <h4 style="color: #555; margin-top: 15px; margin-bottom: 8px;">Phase 1: Immediate Poll After Block Report</h4>
+                <p><strong>Time:</strong> ~100ms</p>
+                <ul style="margin-left: 20px;">
+                    <li>LPN sends unsegmented Block Report (9 bytes for 4 chunks)</li>
+                    <li>LPN immediately polls Friend via <code>bt_mesh_lpn_poll()</code></li>
+                    <li>Friend responds with "no data" (chunks not ready yet)</li>
+                    <li>Source: <code>zephyr/subsys/bluetooth/mesh/blob_srv.c:205</code></li>
+                </ul>
+
+                <h4 style="color: #555; margin-top: 15px; margin-bottom: 8px;">Phase 2: Wait for Chunks</h4>
+                <p><strong>Time:</strong> <code>1000ms</code> (capped during active DFU)</p>
+                <ul style="margin-left: 20px;">
+                    <li>LPN waits 1 second before next poll (Zephyr caps poll timeout during active transmission)</li>
+                    <li><strong>During this wait:</strong> Distributor sends chunks to Friend (5-6 seconds for 4 chunks)</li>
+                    <li>Friend receives all segments and queues them</li>
+                    <li>When LPN polls again, Friend has data ready</li>
+                </ul>
+
+                <h4 style="color: #555; margin-top: 15px; margin-bottom: 8px;">Phase 3: Segment Reception (Friend → LPN)</h4>
+                <p><strong>Time:</strong> <code>totalSegments × 200ms</code></p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Total Segments:</strong> maxChunks × segmentsPerChunk</li>
+                    <li>Friend sends ONE segment per poll with <code>md=1</code> flag</li>
+                    <li>Each segment delivery cycle: poll → segment → next poll = <strong>~200ms</strong> (measured)</li>
+                    <li>NOT 100ms as initially modeled - packet capture shows actual timing is 200ms</li>
+                    <li>Continues until all segments delivered (<code>md=0</code>)</li>
+                </ul>
+
+                <h4 style="color: #555; margin-top: 15px; margin-bottom: 8px;">Phase 4: BLOB Report Timeout</h4>
+                <p><strong>Time:</strong> <code>BLOB_REPORT_TIMEOUT</code> (default: 10s)</p>
+                <ul style="margin-left: 20px;">
+                    <li>After receiving last segment, LPN waits before sending next Block Report</li>
+                    <li>Timer is reset on every completed chunk</li>
+                    <li>If timeout expires with missing chunks, LPN sends report listing missing chunks</li>
+                    <li>Source: <code>zephyr/subsys/bluetooth/mesh/blob_srv.c:802</code></li>
+                </ul>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Step 6: Calculate Total DFU Time</h3>
+                <p><strong>Formula:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Block Reports Needed:</strong> ⌈totalChunks / maxChunks⌉</li>
+                    <li><strong>Single LPN Time:</strong> blockReportsNeeded × blockReportCycleMs × 1.15</li>
+                    <li><strong>Multiple LPNs:</strong> singleLpnTime × numTargets (sequential unicast)</li>
+                    <li><strong>15% Overhead:</strong> Accounts for retransmissions, network collisions, timing variations, and protocol overhead</li>
+                </ul>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Example Calculation (Default Values)</h3>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; border-left: 4px solid #CC0000; margin-top: 10px; font-family: monospace; font-size: 0.9em;">
+                    <strong>Configuration:</strong><br>
+                    - Firmware: 262144 bytes (256 KB)<br>
+                    - Queue Size: 46 segments<br>
+                    - RX_SEG_MAX: 10 (all nodes)<br>
+                    - DESIRED_CHUNKS_PER_REQUEST: 4<br>
+                    - BLOB_REPORT_TIMEOUT: 10s<br>
+                    <br>
+                    <strong>Fixed Defaults (not user-configurable in UI):</strong><br>
+                    - LPN_POLL_TIMEOUT: 300 (30 seconds)<br>
+                    - LPN_RECV_DELAY: 100ms<br>
+                    - FRIEND_RECV_WIN: 255ms<br>
+                    <br>
+                    <strong>Calculated:</strong><br>
+                    - Chunk size: 113 bytes<br>
+                    - Segments per chunk: 10<br>
+                    - Max chunks (from queue): 4 (46 / 10 = 4.6)<br>
+                    - Max chunks (actual): MIN(4 desired, 4 from queue) = 4<br>
+                    - Total segments per report: 40<br>
+                    - POLL_TIMEOUT_MAX: ~5.9s (from defaults)<br>
+                    - Effective poll timeout during DFU: 1.0s (capped)<br>
+                    - Total chunks needed: 2320<br>
+                    - Block reports needed: 580<br>
+                    <br>
+                    <strong>Time per Block Report (packet capture based):</strong><br>
+                    - Immediate poll: 0.1s<br>
+                    - Wait for chunks: 1.0s (Zephyr DFU cap)<br>
+                    - Segment reception: 8.0s (40 × 0.2s)<br>
+                    - BLOB timeout: 10.0s<br>
+                    - Total: 19.1s<br>
+                    <br>
+                    <strong>Total DFU Time (1 LPN):</strong><br>
+                    580 × 19.1s × 1.30 = 14,393s = <strong>03:59:53</strong>
+                </div>
+
+                <h3 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Important Notes</h3>
+                <ul style="margin-left: 20px;">
+                    <li>Calculation is based on Zephyr RTOS 3.x implementation and validated against packet capture analysis</li>
+                    <li><strong>LPN poll timeout during DFU:</strong> Zephyr automatically caps poll timeout at 1 second during active transmissions, regardless of CONFIG_BT_MESH_LPN_POLL_TIMEOUT setting</li>
+                    <li><strong>Segment delivery timing (200ms):</strong> Measured from actual packet captures, not theoretical estimates</li>
+                    <li>Assumes unicast DFU mode (targets updated sequentially)</li>
+                    <li>Actual times may vary based on RF environment, interference, network topology, and retransmissions</li>
+                    <li>The 30% overhead is an engineering estimate - real-world overhead may differ</li>
+                    <li>For best accuracy, validate with actual DFU measurements in your deployment environment</li>
+                    <li><strong>Non-configurable parameters:</strong> LPN_POLL_TIMEOUT and LPN_RECV_DELAY use fixed defaults (80/100ms) for DFU estimation as they have minimal impact on actual DFU duration</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>BLE Mesh DFU Configuration Optimizer | Based on Zephyr RTOS Implementation</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -74,6 +74,7 @@ void Menu_selectedDeviceCB(uint8 index);
 void Menu_connPhyCB(uint8 index);
 void Menu_connPhyChangeCB(uint8 index);
 void Menu_paramUpdateCB(uint8 index);
+void Menu_GattExchangeMTUCB(uint8 index);
 void Menu_disconnectCB(uint8 index);
 // Gatt callbacks
 void Menu_GattServicesCB(uint8 index);
@@ -140,6 +141,7 @@ const MenuModule_Menu_t workWithMenu[] =
  {"GATT", &Menu_GattServicesCB, "Explore the GATT table"},
  {"Change conn phy", &Menu_connPhyCB, "1M, Coded or 2M"},
  {"Param update", &Menu_paramUpdateCB, "Send connection param update req"},
+ {"MTU update", &Menu_GattExchangeMTUCB, "Set MTU to the maximum value possible"},
  {"Disconnect", &Menu_disconnectCB, "Disconnect a specific connection"}
 };
 
@@ -507,6 +509,34 @@ void Menu_paramUpdateCB(uint8 index)
     MenuModule_printf(APP_MENU_GENERAL_STATUS_LINE, 0, "Call Status: ParamUpdateReq = "
                       MENU_MODULE_COLOR_BOLD MENU_MODULE_COLOR_RED "%d" MENU_MODULE_COLOR_RESET,
                       status);
+}
+
+
+
+/*********************************************************************
+ * @fn      Menu_GattExchangeMTUCB
+ *
+ * @brief   A callback that will be called once the ATT Exchange MTU GATT item
+ *          in the workWithMenu is selected.
+ *
+ *
+ * @param   index - the index in the menu
+ *
+ * @return  none
+ */
+void Menu_GattExchangeMTUCB(uint8 index){
+    bStatus_t status;
+    attExchangeMTUReq_t req;
+
+    req.clientRxMTU = 255-L2CAP_HDR_SIZE;
+    status = GATT_ExchangeMTU(menuCurrentConnHandle,&req,BLEAppUtil_getSelfEntity());
+
+    // Print the status of the GATT_ExchangeMTU call
+    MenuModule_printf(APP_MENU_GENERAL_STATUS_LINE, 0, "Call Status: Change max ATT_MTU = "
+                      MENU_MODULE_COLOR_BOLD MENU_MODULE_COLOR_RED "%d" MENU_MODULE_COLOR_RESET,
+                      status);
+    // Go to the last menu
+    MenuModule_goBack();
 }
 
 /*********************************************************************

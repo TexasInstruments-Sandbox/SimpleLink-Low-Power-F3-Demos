@@ -67,9 +67,9 @@ peripheral examples from the F3 SDK can be used.
 ## Dependencies
 
 * `full_GATT_client_ble_LP_EM_CC2340R5_freertos_ticlang`
-  * Simplelink F3 SDK 8.40.02.01
-  * Code Composer Studio 12.8.1 / Code Composer Studio Theia 20.1.1
-  * UniFlash 9.0.0.5086
+  * Simplelink F3 SDK 9.14.02.16
+  * Code Composer Studio Theia 20.4.1
+  * UniFlash 9.4.1.5566
 
 ## Explaination of the example
 
