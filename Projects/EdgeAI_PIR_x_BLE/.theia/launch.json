@@ -1,0 +1,49 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "EdgeAI x Basic_Ble",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "EdgeAI x Basic_Ble",
+                "resourceId": "/EdgeAI x Basic_Ble"
+            },
+            "connections": [
+                {
+                    "name": "Texas Instruments XDS110 USB Debug Probe",
+                    "cores": [
+                        {
+                            "name": "Cortex_M33_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "EdgeAI_x_BLE",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "EdgeAI_x_BLE",
+                "resourceId": "/EdgeAI_x_BLE"
+            },
+            "connections": [
+                {
+                    "name": "Texas Instruments XDS110 USB Debug Probe",
+                    "cores": [
+                        {
+                            "name": "Cortex_M33_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

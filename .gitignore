@@ -21,12 +21,15 @@ build/
 
 # Compiled object files, binaries, etc.
 *.o
+*.a
+!mod.a 
 *.obj
 *.elf
 *.map
 *.a
 *.lib
 *.exe
+!TIAudioRecordingTool.exe
 *.clangd
 
 # Logs and temporary files

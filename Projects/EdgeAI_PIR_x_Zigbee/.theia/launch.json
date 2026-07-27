@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "occupancy_sensor_LP_EM_CC2755P10_freertos_ticlang",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "occupancy_sensor_LP_EM_CC2755P10_freertos_ticlang",
+                "resourceId": "/occupancy_sensor_LP_EM_CC2755P10_freertos_ticlang"
+            }
+        },
+        {
+            "name": "occupancy_sensor(4CLAUDE)",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "occupancy_sensor(4CLAUDE)",
+                "resourceId": "/occupancy_sensor(4CLAUDE)"
+            }
+        },
+        {
+            "name": "EdgeAI_x_Zigbee",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "EdgeAI_x_Zigbee",
+                "resourceId": "/EdgeAI_x_Zigbee"
+            }
+        }
+    ]
+}
