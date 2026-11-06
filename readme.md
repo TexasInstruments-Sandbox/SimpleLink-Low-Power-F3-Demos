@@ -107,33 +107,68 @@ The following table lists the software tool included in this repository:
 
 The following table lists the examples included in this repository:
 
+**Bluetooth**
+
 | **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
 |---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
-| BLE BLDC motor control    | 8.40.0.61       | LP-EM-CC2340R5     | 20.2.0          | Brushless DC (BLDC) motor control using a BLE radio interface.                      |
-| BLE Sensor Suite          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the BP-BASSENSORSMKII to transmit data to the SimpleLink Connect App.          |
-| EdgeAI PIR x BLE          | 9.12.00.19      | LP-EM-CC2745R10-Q1 | 20.5.1          | BLE peripheral running neural network inferencing on PIR Sensor data. 
-| EdgeAI PIR x Zigbee       | 9.14.02.16      | LP-EM-CC2745R10-Q1 | 20.5.1          | Zigbee end device running nueral network inferencing on PIR Sensor data.            |
-| CLI Driver Example        | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a UART-based Command Line Interface (CLI) driver.                      |
-| Color Light               | 9.14.0.39       | LP-EM-CC2340R5     | 20.4.0          | Operates as a Zigbee router (ZR) color light.                                       |
-| CS-Mesh Examples          | 9.14.02.14      | LP-EM-CC2745R10-Q1 | 20.4.1          | Two projects that show how to use both Channel Sounding and BLE Mesh simultaneously.|
-| DALI Zigbee Bridge        | 9.14.0.39       | LP-EM-CC2340R5     | 20.4.0          | Bridges incoming ZCL commands into DALI wired instructions to a MSPM0 LP.           |
-| Sharp128 TFT LCD          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the Display driver to write output to the BOOSTXL-SHARP128 LCD display.        |
-| Full GATT Client          | 9.14.02.16      | LP-EM-CC2340R5     | 20.3.0          | GATT Client that uses the GATT API functions to query the GATT table of any central.|
-| LCD                       | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Driving a 1/3 bias, 3-COM, 7-segment LCD with backlight and contrast control.       |
-| MCUboot XIP               | 9.14.0.41       | LP-EM-CC2340R5     | 20.3.1          | Creating customized bootloader that can deterministically switch between images.    |
-| PropRF Echo RX            | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Proprietary Echo RX example modified for stepper motor commands.                    |
-| PropRF Echo TX with stepper motor  | 9.11.0.18 | LP-EM-CC2340R5  | 20.2.0          | Proprietary Echo TX example with added stepper motor functionality.                 |
-| rfPacket IEEE test        | 9.12.0.19       | LP-EM-CC2340R5     | 20.2.0          | Proprietary RF RX/TX example using the IEEE 802.15.4 PHY.                           |
-| mcuSblHost                | 9.10.0.83       | LP-EM-CC2340R5     | 12.8.1          | Reference example to interface with a CC2340R5 ROM Serial Bootloader (SBL).         |
-| PWM output with DMA       | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Demonstrates PWM output control using a DMA lookup table.                           |
-| Zigbee Simple Combo       | 9.14.0.35       | LP-EM-CC2340R5     | 20.2.0          | Zigbee Coordinator with combined OnOff Light and Green Power Sink applications.     |
-| Super Advertiser          | 9.10.0.83       | LP-EM-CC2340R5     | 20.3.0          | Broadcaster that sends as much advertisements as possible to stress test centrals.  |
-| UART Commandline Example  | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Provides a simple UART-based command-line interface for user interaction.           |
-| Single-Wire Controller    | 9.14.0.39       | LP-EM-CC2745R10-Q1 | 20.1.1          | Asynchronous bi-directional control of a single-wire bus using UART.                |
-| Zigbee Window Controller  | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Zigbee Coordinator with Window Controller ZCL.                                      |
-| Zigbee Window Covering    | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Window Covering sleepy ZED node with Brushed DC (BDC) and hall effect sensor.       |
-| ANCS & AMS                | 9.14.0.35       | LP-EM-CC2745R10-Q1 | 20.4.0          | Peripheral that will connect to iOS device and subscribe to ANCS and AMS services.  |
-| Second UART               | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a second (Software-based) uart in a BLE example on the CC2340R device. |
+| [ANCS & AMS](Projects/bluetooth/ancs_ams_LP_EM_CC2745R10_Q1_freertos_ticlang)                | 9.14.0.35       | LP-EM-CC2745R10-Q1 | 20.4.0          | Peripheral that will connect to iOS device and subscribe to ANCS and AMS services.  |
+| [BLE BLDC Motor Control](Projects/bluetooth/BLE_bldc_motor_control)    | 8.40.0.61       | LP-EM-CC2340R5     | 20.2.0          | Brushless DC (BLDC) motor control using a BLE radio interface.                      |
+| [BLE Remote Control](Projects/bluetooth/ble_remote_control)        | 9.12.00.19      | LP-EM-CC2340R53    | 20.5.0          | Android TV BLE remote control reference design with Voice over BLE, HID, IR blaster, OAD, and MCUBoot secure bootloader. |
+| [BLE Sensor Suite](Projects/bluetooth/ble_sensors_LP_EM_CC2340R5_freertos_ticlang)          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the BP-BASSENSORSMKII to transmit data to the SimpleLink Connect App.          |
+| [Full GATT Client](Projects/bluetooth/full_ble_GATT_client_LP_EM_CC2340R5_freertos_ticlang)          | 9.14.02.16      | LP-EM-CC2340R5     | 20.3.0          | GATT Client that uses the GATT API functions to query the GATT table of any central.|
+| [Second UART](Projects/bluetooth/second_uart_cc23xx)               | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a second (Software-based) uart in a BLE example on the CC2340R device. |
+| [Super Advertiser](Projects/bluetooth/super_advertiser_LP_EM_CC2340R5_freertos)          | 9.10.0.83       | LP-EM-CC2340R5     | 20.3.0          | Broadcaster that sends as much advertisements as possible to stress test centrals.  |
+| [UART Commandline Example](Projects/bluetooth/UART_Commands_Basic_BLE_CC2340R5)  | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Provides a simple UART-based command-line interface for user interaction.           |
+| [Voice over BLE](Projects/bluetooth/voice_over_ble)            | 9.14.02.16      | LP-EM-CC2340R53    | 20.5.0          | Wireless audio streaming over BLE from a CC2340R53 microphone transmitter to a CC26X2R1 receiver with I2S audio output and PC recording tool. |
+
+**Zigbee**
+
+| **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
+|---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
+| [Color Light](Projects/zigbee/color_light_LP_EM_CC2340R5_freertos_ticlang)               | 9.14.0.39       | LP-EM-CC2340R5     | 20.4.0          | Operates as a Zigbee router (ZR) color light.                                       |
+| [DALI Zigbee Bridge](Projects/zigbee/dimmable_light_LP_EM_CC2340R5_freertos_ticlang)        | 9.14.0.39       | LP-EM-CC2340R5     | 20.4.0          | Bridges incoming ZCL commands into DALI wired instructions to a MSPM0 LP.           |
+| [Zigbee Simple Combo](Projects/zigbee/simple_combo_LP_EM_CC2340R5_freertos_ticlang)       | 9.14.0.35       | LP-EM-CC2340R5     | 20.2.0          | Zigbee Coordinator with combined OnOff Light and Green Power Sink applications.     |
+| [Zigbee Window Controller](Projects/zigbee/Zigbee_window/window_controller_LP_EM_CC2340R5_freertos_ticlang)  | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Zigbee Coordinator with Window Controller ZCL.                                      |
+| [Zigbee Window Covering](Projects/zigbee/Zigbee_window/window_covering_LP_EM_CC2340R5_freertos_ticlang)    | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Window Covering sleepy ZED node with Brushed DC (BDC) and hall effect sensor.       |
+
+**Channel Sounding**
+
+| **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
+|---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
+| [CS-Mesh Examples](Projects/channel_sounding/cs_mesh)          | 9.14.02.14      | LP-EM-CC2745R10-Q1 | 20.4.1          | Two projects that show how to use both Channel Sounding and BLE Mesh simultaneously.|
+
+**Edge AI**
+
+| **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
+|---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
+| [EdgeAI Key Word Spotting](Projects/edge_ai/edgeai_key_word_spotting_ble)  | 9.12.00.19      | LP-EM-CC2745R10-Q1 + LP-EM-CC2340R53 | 20.2.0 | On-device keyword recognition using a TVM neural network on a BLE peripheral sensor, streaming results to a BLE central with real-time PC visualization. |
+| [EdgeAI PIR x BLE](Projects/edge_ai/EdgeAI_PIR_x_BLE)          | 9.12.00.19      | LP-EM-CC2745R10-Q1 | 20.5.1          | BLE peripheral running neural network inferencing on PIR Sensor data.               |
+| [EdgeAI PIR x Zigbee](Projects/edge_ai/EdgeAI_PIR_x_Zigbee)       | 9.14.02.16      | LP-EM-CC2745R10-Q1 | 20.5.1          | Zigbee end device running nueral network inferencing on PIR Sensor data.            |
+
+**Proprietary RF**
+
+| **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
+|---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
+| [PropRF Echo RX](Projects/prop_rf/propRF_stepper_motor/rfEchoRx_LP_EM_CC2340R5_freertos_ticlang)            | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Proprietary Echo RX example modified for stepper motor commands.                    |
+| [PropRF Echo TX with stepper motor](Projects/prop_rf/propRF_stepper_motor/rfEchoTx_stepper_motor)  | 9.11.0.18 | LP-EM-CC2340R5  | 20.2.0          | Proprietary Echo TX example with added stepper motor functionality.                 |
+| [rfPacket IEEE test](Projects/prop_rf/rfPacket_ieee_test)        | 9.12.0.19       | LP-EM-CC2340R5     | 20.2.0          | Proprietary RF RX/TX example using the IEEE 802.15.4 PHY.                           |
+
+**Drivers & Peripherals**
+
+| **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
+|---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
+| [CLI Driver Example](Projects/drivers/CLI_driver_LP_EM_CC2340R5_freertos_ticlang)        | 8.40.2.01       | LP-EM-CC2340R5     | 20.1.1          | Demonstrates a UART-based Command Line Interface (CLI) driver.                      |
+| [Sharp128 TFT LCD](Projects/drivers/display_sharp128_LP_EM_CC2340R5_freertos_ticlang)          | 9.12.00.19      | LP-EM-CC2340R5     | 20.3.0          | Uses the Display driver to write output to the BOOSTXL-SHARP128 LCD display.        |
+| [LCD](Projects/drivers/LCD_LP_EM_CC2340R5_freertos_ticlang)                       | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Driving a 1/3 bias, 3-COM, 7-segment LCD with backlight and contrast control.       |
+| [PWM output with DMA](Projects/drivers/pwmDMA_LP_EM_CC2340R5_freertos_ticlang)       | 9.11.0.18       | LP-EM-CC2340R5     | 20.2.0          | Demonstrates PWM output control using a DMA lookup table.                           |
+| [Single-Wire Controller](Projects/drivers/uart2_singlewire_controller_LP_EM_CC2745R10_Q1_freertos_ticlang)    | 9.14.0.39       | LP-EM-CC2745R10-Q1 | 20.1.1          | Asynchronous bi-directional control of a single-wire bus using UART.                |
+
+**Bootloader**
+
+| **Example Name**          | **SDK Version**  | **Board**          | **CCS Version** | **Description**                                                                 |
+|---------------------------|------------------|--------------------|-----------------|---------------------------------------------------------------------------------|
+| [MCUboot XIP](Projects/bootloader/MCUboot_XIP)               | 9.14.0.41       | LP-EM-CC2340R5     | 20.3.1          | Creating customized bootloader that can deterministically switch between images.    |
+| [mcuSblHost](Projects/bootloader/sblMcuHost)                | 9.10.0.83       | LP-EM-CC2340R5     | 12.8.1          | Reference example to interface with a CC2340R5 ROM Serial Bootloader (SBL).         |
 ---
 
 
